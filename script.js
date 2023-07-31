@@ -5,9 +5,6 @@ function Book(title, author, pageCount, haveRead) {
     this.author = author;
     this.pageCount = pageCount;
     this.haveRead = haveRead;
-    this.info = function() {
-        return `${this.title} by ${this.author}, ${this.pageCount} pages, ${this.haveRead ? "already" : "not yet"} read`
-    }
 }
 
 function addBookToLibrary(...books) {
@@ -59,7 +56,7 @@ function addFirstRow(table) {
 	return row.children.length // allows tHeader to be full width
 }
 
-function displayBook(book) {
+function addBook(book) {
 	const row = table.insertRow(-1);
 	const bookIndex = document.querySelector("tbody").children.length - 2;
 	row.classList.add("book", `book-${bookIndex}`);
@@ -77,4 +74,11 @@ function displayBook(book) {
 	haveRead.textContent = book.haveRead ? "Yes" : "No"
 }
 
-myLibrary.forEach(displayBook);
+myLibrary.forEach(addBook);
+
+const addBookBtn = document.querySelector("button.add-book");
+addBookBtn.addEventListener("click", displayForm);
+
+function displayForm() {
+	alert("Form coming soon");
+}

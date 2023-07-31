@@ -4,6 +4,15 @@ body {
 	color: #0c0d2b;
 }
 
+header {
+	display: flex;
+	align-items: center;
+}
+
+header button {
+	margin-left: 100px;
+}
+
 table,
 td {
 	border: 1px solid #0c0d2b;

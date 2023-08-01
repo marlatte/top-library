@@ -8,12 +8,13 @@
 
 :root {
 	--bg-main: hsl(197, 80%, 70%);
-	--bg-read-true: hsl(140, 74%, 90%);
-	--bg-read-false: hsl(28, 84%, 90%);
+	--bg-card: hsl(197, 85%, 95%);
+	--read-true: hsl(104, 85%, 90%);
+	--read-false: hsl(0, 85%, 90%);
 }
 
 body {
-	height: 100vh;
+	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
 
@@ -23,9 +24,15 @@ body {
 	color: #0c0d2b;
 }
 
+button {
+	cursor: pointer;
+	font-size: 1rem;
+	font-weight: bold;
+}
 
 
 /* -------------------- /Utilities -------------------- */
+/* -------------------- Content -------------------- */
 
 header {
 	display: flex;
@@ -39,7 +46,8 @@ header h1 {
 	font-size: 2rem;
 }
 
-.library {
+.library-container {
+	flex: auto;
 	height: 100%;
 	flex-direction: column;
 	justify-content: space-between;
@@ -47,13 +55,7 @@ header h1 {
 	margin: 0 2rem 2rem;
 }
 
-button {
-	cursor: pointer;
-	font-size: 1rem;
-	font-weight: bold;
-}
-
-.library button {
+.library-container button {
     padding: 0.75rem 2rem;
 	width: 80%;
 	align-self: center;
@@ -69,49 +71,7 @@ button {
 	/* box-shadow: 0 0 5px hsl(197, 70%, 95%); */
 }
 
-form button {
-	padding: 7px 10px;
-	
-	color: hsl(240, 67%, 24%);
-	background-color: hsl(240, 20%, 94%);
-	border: 1px solid hsl(240, 30%, 70%);
-	border-radius: 5px;
-}
-
-form button:hover {
-	background-color: hsl(240, 40%, 90%);
-}
-
-form button:active {
-	background-color: hsl(240, 20%, 100%);
-}
-
-/* -------------------- TABLE -------------------- */
-table {
-	width: 100%;
-}
-
-table,
-td {
-	border: 1px solid #0c0d2b;
-	padding: 5px 10px;
-}
-
-thead,
-tfoot {
-	background-color: #333;
-	color: #fff;
-	text-align: center;
-}
-
-.col-headers {
-	background-color: hsl(240, 80%, 90%);
-	text-align: center;
-}
-
-/* -------------------- /TABLE -------------------- */
-
-/* -------------------- CARD GRID -------------------- */
+/* -------------------- Card Grid -------------------- */
 
 .grid-container {
 	--grid-spacing: 25px;
@@ -126,18 +86,22 @@ tfoot {
 
 .card {
 	padding: 10px 15px;
+
+	display: flex;
+	justify-content: space-between;
+
 	border-radius: 6px;
-	background-color: #fff;
+	background-color: var(--bg-card);
 	border: 2px solid black;
 }
 
-/* .card.have-read-true {
-	background-color: var(--bg-read-true);
+.card.read-true {
+	background-image: linear-gradient(150deg, var(--bg-card) 60%,  var(--read-true));
 }
 
-.card.have-read-false {
-	background-color: var(--bg-read-false);
-} */
+.card.read-false {
+	background-image: linear-gradient(150deg, var(--bg-card) 60%, var(--read-false));
+}
 
 .card .title {
 	font-size: 1.3rem;
@@ -151,9 +115,13 @@ tfoot {
 	color: grey;
 }
 
-/* -------------------- /CARD GRID -------------------- */
+.card .have-read {
+	align-self: flex-end;
+}
 
-/* -------------------- FORM -------------------- */
+/* -------------------- /Card Grid -------------------- */
+
+/* -------------------- Form -------------------- */
 
 form {
 	/* display: flex; */
@@ -241,6 +209,23 @@ form span[aria-label="required"] {
 	-webkit-appearance: auto;
 }
 
+form button {
+	padding: 7px 10px;
+	
+	color: hsl(240, 67%, 24%);
+	background-color: hsl(240, 20%, 94%);
+	border: 1px solid hsl(240, 30%, 70%);
+	border-radius: 5px;
+}
+
+form button:hover {
+	background-color: hsl(240, 40%, 90%);
+}
+
+form button:active {
+	background-color: hsl(240, 20%, 100%);
+}
+
 .cover-all {
 	position: absolute;
 
@@ -249,4 +234,5 @@ form span[aria-label="required"] {
 	height: 100vh;
 }
 
-/* -------------------- /FORM -------------------- */
+/* -------------------- /Form -------------------- */
+/* -------------------- /Content -------------------- */

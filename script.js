@@ -1,27 +1,35 @@
-//
-// Variables
-//
+// -------------------------------------------------------------------------------- //
+// ---------------------------     Variables    ----------------------------------- //
+// -------------------------------------------------------------------------------- //
 
+
+// -- Behind the Scenes -- //
 let myLibrary = [];
 
+const howlCastle = new Book("Howl's Moving Castle", "Diana Wynne Jones", 429, true);
 const hobbit = new Book("The Hobbit","J. R. R. Tolkien", 295, true);
 const colorOfMagic = new Book("The Color of Magic", "Terry Pratchett", 288, true);
 const hogfather = new Book("Hogfather", "Terry Pratchett", 384, false);
 const ctYank = new Book("A Connecticut Yankee in King Arthur's Court", "Mark Twain", 469, true);
 
-const container = document.querySelector(".table-container");
-const table = document.createElement("TABLE");
-let numCols = addFirstRow(table);
 
+// -- On-Screen Stuff -- //
+const cards = document.querySelectorAll(".card");
+const libraryContainer = document.querySelector(".library-container");
+const gridContainer = document.querySelector(".grid-container");
+
+const form = document.querySelector("form")
 const coverAll = document.querySelector(".cover-all");
 const addBookBtn = document.querySelector("button.add-book");
 const closeFormBtn = document.querySelector("button.close-form");
 
 
-//
-// Functions & Methods
-//
+// -------------------------------------------------------------------------------- //
+// ----------------------     Functions & Methods    ------------------------------ //
+// -------------------------------------------------------------------------------- //
 
+
+// -- Behind the Scenes -- //
 function Book(title, author, pageCount, haveRead) {
     this.title = title;
     this.author = author;
@@ -33,80 +41,72 @@ function addBookToLibrary(...books) {
 	myLibrary.push(...books);
 }
 
-function createTableHead(table, numRows) {
-	const tHeader = table.createTHead();
-	const tHeaderRow = tHeader.insertRow(0);
-	const tHeaderCell = tHeaderRow.insertCell(0);
-	tHeaderCell.textContent = "My Library";
-	tHeaderCell.setAttribute("colspan", numRows)
+
+// -- On-Screen Stuff -- //
+function createCard(book) {
+	const newCard = document.createElement("div");
+	const newText = document.createElement("div");
+	const newTitle = document.createElement("div");
+	const newAuthor = document.createElement("div");
+	const newPageCount = document.createElement("div");
+	const newHaveRead = document.createElement("div");
+
+	newCard.classList += "card";
+	newText.classList += "text";
+	newTitle.classList += "title";
+	newAuthor.classList += "author";
+	newPageCount.classList += "page-count";
+	newHaveRead.classList += "have-read";
+
+	newTitle.textContent = book.title;
+	newAuthor.textContent = book.author;
+	newPageCount.textContent = `${book.pageCount} pages`;
+	newHaveRead.textContent = book.haveRead ? "Read" : "Not Read"
+
+	if (book.haveRead) {
+		newCard.classList += " read-true";
+	} else {
+		newCard.classList += " read-false";
+	}
+
+	newCard.appendChild(newText);
+	newText.appendChild(newTitle);
+	newText.appendChild(newAuthor);
+	newText.appendChild(newPageCount);
+	newCard.appendChild(newHaveRead);
+
+	gridContainer.appendChild(newCard);
 }
 
-function addFirstRow(table) {
-	const row = table.insertRow(0);
-	row.classList.add("col-headers");
-
-	const title = row.insertCell(0);
-	title.textContent = "Title"
-
-	const author = row.insertCell(1);
-	author.textContent = "Author"
-
-	const pageCount = row.insertCell(2);
-	pageCount.textContent = "Pages"
-
-	const haveRead = row.insertCell(3);
-	haveRead.textContent = "Read?"
-
-	return row.children.length // allows tHeader to be full width
+function updateLibraryDisplay() {
+	for (const book of myLibrary) {
+		createCard(book)
+	}
 }
-
-function showBook(book) {
-	const row = table.insertRow(-1);
-	const bookIndex = document.querySelector("tbody").children.length - 2;
-	row.classList.add("book", `book-${bookIndex}`);
-
-	const title = row.insertCell(0);
-	title.textContent = book.title;
-
-	const author = row.insertCell(1);
-	author.textContent = book.author;
-
-	const pageCount = row.insertCell(2);
-	pageCount.textContent = book.pageCount;
-
-	const haveRead = row.insertCell(3);
-	haveRead.textContent = book.haveRead ? "Yes" : "No"
-}
-
 
 function displayForm() {
-	const form = document.querySelector("form")
 	form.style.display = "flex";
-	table.style.display = "none";
-	coverAll.style.display = "initial"
+	addBookBtn.style.display = "none";
+	coverAll.style.display = "initial";
 }
 
 function hideForm() {
-	const form = document.querySelector("form")
 	form.style.display = "none";
-	table.style.display = "table";
-	coverAll.style.display = "none"
+	addBookBtn.style.display = "inline-block";
+	coverAll.style.display = "none";
 }
 
-//
-// Inits & Event Listeners
-//
+// -------------------------------------------------------------------------------- //
+// --------------------     Calls & Event Listeners    ---------------------------- //
+// -------------------------------------------------------------------------------- //
 
-addBookToLibrary(hobbit, colorOfMagic, hogfather, ctYank);
 
-table.setAttribute("id", "myTable");
-createTableHead(table, numCols);
-container.appendChild(table);
+// -- Behind the Scenes -- //
+addBookToLibrary(howlCastle, hobbit, colorOfMagic, hogfather, ctYank);
 
-myLibrary.forEach(showBook);
 
+// -- On-Screen Stuff -- //
 addBookBtn.addEventListener("click", displayForm);
 closeFormBtn.addEventListener("click", hideForm);
 
-
-
+updateLibraryDisplay();

@@ -1,5 +1,26 @@
-/////////////////// Library back-end ///////////////////
+//
+// Variables
+//
+
 let myLibrary = [];
+
+const hobbit = new Book("The Hobbit","J. R. R. Tolkien", 295, true);
+const colorOfMagic = new Book("The Color of Magic", "Terry Pratchett", 288, true);
+const hogfather = new Book("Hogfather", "Terry Pratchett", 384, false);
+const ctYank = new Book("A Connecticut Yankee in King Arthur's Court", "Mark Twain", 469, true);
+
+const container = document.querySelector(".table-container");
+const table = document.createElement("TABLE");
+let numCols = addFirstRow(table);
+
+const coverAll = document.querySelector(".cover-all");
+const addBookBtn = document.querySelector("button.add-book");
+const closeFormBtn = document.querySelector("button.close-form");
+
+
+//
+// Functions & Methods
+//
 
 function Book(title, author, pageCount, haveRead) {
     this.title = title;
@@ -11,24 +32,6 @@ function Book(title, author, pageCount, haveRead) {
 function addBookToLibrary(...books) {
 	myLibrary.push(...books);
 }
-
-const hobbit = new Book("The Hobbit","J. R. R. Tolkien", 295, true);
-const colorOfMagic = new Book("The Color of Magic", "Terry Pratchett", 288, true);
-const hogfather = new Book("Hogfather", "Terry Pratchett", 384, false);
-const ctYank = new Book("A Connecticut Yankee in King Arthur's Court", "Mark Twain", 469, true);
-
-addBookToLibrary(hobbit, colorOfMagic, hogfather, ctYank);
-
-
-/////////////////// Create table on page ///////////////////
-
-const container = document.querySelector(".table-container");
-const table = document.createElement("TABLE");
-table.setAttribute("id", "myTable");
-let numCols = addFirstRow(table);
-
-createTableHead(table, numCols);
-container.appendChild(table);
 
 function createTableHead(table, numRows) {
 	const tHeader = table.createTHead();
@@ -75,17 +78,6 @@ function showBook(book) {
 	haveRead.textContent = book.haveRead ? "Yes" : "No"
 }
 
-myLibrary.forEach(showBook);
-
-
-/////////////////// Show & hide form ///////////////////
-const coverAll = document.querySelector(".cover-all");
-
-const addBookBtn = document.querySelector("button.add-book");
-addBookBtn.addEventListener("click", displayForm);
-
-const closeFormBtn = document.querySelector("button.close-form");
-closeFormBtn.addEventListener("click", hideForm);
 
 function displayForm() {
 	const form = document.querySelector("form")
@@ -100,4 +92,21 @@ function hideForm() {
 	table.style.display = "table";
 	coverAll.style.display = "none"
 }
+
+//
+// Inits & Event Listeners
+//
+
+addBookToLibrary(hobbit, colorOfMagic, hogfather, ctYank);
+
+table.setAttribute("id", "myTable");
+createTableHead(table, numCols);
+container.appendChild(table);
+
+myLibrary.forEach(showBook);
+
+addBookBtn.addEventListener("click", displayForm);
+closeFormBtn.addEventListener("click", hideForm);
+
+
 

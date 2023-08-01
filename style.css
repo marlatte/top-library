@@ -42,10 +42,6 @@ header {
 	margin: 25px 0;
 }
 
-header h1 {
-	font-size: 2rem;
-}
-
 .library-container {
 	flex: auto;
 	height: 100%;
@@ -55,7 +51,8 @@ header h1 {
 	margin: 0 2rem 2rem;
 }
 
-.library-container button {
+.library-container button,
+.submit-book {
     padding: 0.75rem 2rem;
 	width: 80%;
 	align-self: center;
@@ -68,7 +65,6 @@ header h1 {
     border-radius: 40px;
     color: white;
     background-color: #0e0708;
-	/* box-shadow: 0 0 5px hsl(197, 70%, 95%); */
 }
 
 /* -------------------- Card Grid -------------------- */
@@ -124,15 +120,12 @@ header h1 {
 /* -------------------- Form -------------------- */
 
 form {
-	/* display: flex; */
 	flex-direction: column;
 	align-items: stretch;
 	gap: 2rem;
 	z-index: 1;
 
 	align-self: center;
-	width: clamp(45ch, 65%, 75ch);
-	height: 30vh;
 	margin: 10px;
 	padding: 1rem;
 	
@@ -156,13 +149,13 @@ form span[aria-label="required"] {
 	max-width: 700px;
 	
 	display: flex;
-	justify-content: stretch;
 	flex-wrap: wrap;
 	gap: 1rem;
 }
 
 .form-item {
 	flex: auto;
+	width: 200px;
 	display: flex;
 	flex-direction: column;
 	gap: 2px;
@@ -185,7 +178,6 @@ form span[aria-label="required"] {
 
 .form-item label[for="have-read"] {
 	display: flex;
-	justify-content: end;
 	margin-top: 10px;
 }
 
@@ -209,7 +201,7 @@ form span[aria-label="required"] {
 	-webkit-appearance: auto;
 }
 
-form button {
+form button.close-form {
 	padding: 7px 10px;
 	
 	color: hsl(240, 67%, 24%);
@@ -218,11 +210,11 @@ form button {
 	border-radius: 5px;
 }
 
-form button:hover {
+form button.close-form:hover {
 	background-color: hsl(240, 40%, 90%);
 }
 
-form button:active {
+form button.close-form:active {
 	background-color: hsl(240, 20%, 100%);
 }
 

@@ -14,10 +14,6 @@
 	<header>
 		<h1>Howl's Moving Library</h1>
 	</header>
-	<div class="table-container"
-		 hidden>
-		<!-- JS table goes here -->
-	</div>
 	<div class="library-container" style="display: flex;">
 		<div class="grid-container">
 		</div>
@@ -27,7 +23,7 @@
 	<form style="display: none;">
 		<div class="form-header">
 			<div class="text">
-				<h1>Add a book to the library</h1>
+				<h2>Add a book to the library</h2>
 				<p>
 					Required fields are followed by
 					<strong><span aria-label="required">*</span></strong>.
@@ -61,13 +57,14 @@
 					   required />
 			</div>
 			<div class="form-item">
-				<label for="have-read">Have you read it yet?: <span aria-label="required">*</span>
+				<label for="have-read">I have read it already! <span aria-label="required">*</span>
 					<input type="checkbox"
 						   name="have-read"
 						   id="have-read">
 				</label>
 			</div>
 		</div>
+		<button type="submit" class="submit-book">Add My Book!</button>
 	</form>
 	<div class="cover-all"
 		 style="display: none;"></div>

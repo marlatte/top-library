@@ -22,6 +22,7 @@ const form = document.querySelector("form")
 const coverAll = document.querySelector(".cover-all");
 const addBookBtn = document.querySelector("button.add-book");
 const closeFormBtn = document.querySelector("button.close-form");
+const submitBookBtn = document.querySelector("button.submit-book");
 
 
 // -------------------------------------------------------------------------------- //
@@ -86,14 +87,28 @@ function updateLibraryDisplay() {
 
 function displayForm() {
 	form.style.display = "flex";
-	addBookBtn.style.display = "none";
+	libraryContainer.style.display = "none";
 	coverAll.style.display = "initial";
 }
 
 function hideForm() {
 	form.style.display = "none";
-	addBookBtn.style.display = "inline-block";
+	libraryContainer.style.display = "flex";
 	coverAll.style.display = "none";
+}
+
+function submitNewBook(event) {
+	const submitTitle = event.target.form[1].value;
+	const submitAuthor = event.target.form[2].value;
+	const submitPageCount = event.target.form[3].value;
+	const submitHaveRead = event.target.form[4].checked;
+
+	event.preventDefault();
+
+	const submitBook = new Book(submitTitle, submitAuthor, submitPageCount, submitHaveRead);
+	addBookToLibrary(submitBook);
+	hideForm();
+	updateLibraryDisplay();
 }
 
 // -------------------------------------------------------------------------------- //
@@ -108,5 +123,6 @@ addBookToLibrary(howlCastle, hobbit, colorOfMagic, hogfather, ctYank);
 // -- On-Screen Stuff -- //
 addBookBtn.addEventListener("click", displayForm);
 closeFormBtn.addEventListener("click", hideForm);
+submitBookBtn.addEventListener("click", submitNewBook);
 
 updateLibraryDisplay();

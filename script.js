@@ -1,3 +1,4 @@
+/////////////////// Library back-end ///////////////////
 let myLibrary = [];
 
 function Book(title, author, pageCount, haveRead) {
@@ -18,9 +19,9 @@ const ctYank = new Book("A Connecticut Yankee in King Arthur's Court", "Mark Twa
 
 addBookToLibrary(hobbit, colorOfMagic, hogfather, ctYank);
 
-console.table(myLibrary);
 
-//// Create table on page ////
+/////////////////// Create table on page ///////////////////
+
 const container = document.querySelector(".table-container");
 const table = document.createElement("TABLE");
 table.setAttribute("id", "myTable");
@@ -56,7 +57,7 @@ function addFirstRow(table) {
 	return row.children.length // allows tHeader to be full width
 }
 
-function addBook(book) {
+function showBook(book) {
 	const row = table.insertRow(-1);
 	const bookIndex = document.querySelector("tbody").children.length - 2;
 	row.classList.add("book", `book-${bookIndex}`);
@@ -74,11 +75,29 @@ function addBook(book) {
 	haveRead.textContent = book.haveRead ? "Yes" : "No"
 }
 
-myLibrary.forEach(addBook);
+myLibrary.forEach(showBook);
+
+
+/////////////////// Show & hide form ///////////////////
+const coverAll = document.querySelector(".cover-all");
 
 const addBookBtn = document.querySelector("button.add-book");
 addBookBtn.addEventListener("click", displayForm);
 
+const closeFormBtn = document.querySelector("button.close-form");
+closeFormBtn.addEventListener("click", hideForm);
+
 function displayForm() {
-	alert("Form coming soon");
+	const form = document.querySelector("form")
+	form.style.display = "flex";
+	table.style.display = "none";
+	coverAll.style.display = "initial"
 }
+
+function hideForm() {
+	const form = document.querySelector("form")
+	form.style.display = "none";
+	table.style.display = "table";
+	coverAll.style.display = "none"
+}
+

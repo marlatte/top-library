@@ -126,3 +126,99 @@ closeFormBtn.addEventListener("click", hideForm);
 submitBookBtn.addEventListener("click", submitNewBook);
 
 updateLibraryDisplay();
+
+
+/*
+
+Create an array of book objects.
+Create a card to display book info.
+Display a grid of cards with book info.
+Take input from a form, create a new book from those inputs, and refresh the grid with the new book.
+Remove a book from the library, refresh the grid without the deleted book.
+Toggle the read status of any given book.
+
+myLibrary = []
+
+FUNCTION define Book() prototype
+	title
+	author
+	pageCount
+	haveRead
+END FUNCTION
+
+Create a few new Book()'s
+
+FUNCTION addBookToLibrary(...books)
+
+FUNCTION updateGrid()
+	SELECT currentGrid from DOM (every time to make sure it's the right one)
+	const newGrid = createNewGrid()
+	currentGrid.replaceChild(...newGrid)
+END FUNCTION
+
+FUNCTION createNewGrid()
+	newGrid = []
+	FOR EACH book IN myLibrary
+		const newCard = createCard(book)
+		PUSH newCard to newGrid
+	END FOR
+	RETURN newGrid
+END FUNCTION
+
+FUNCTION createCard(book)
+	CREATE <div.card>
+	FOR EACH property IN book		
+		CREATE  <p.property>
+		APPEND <p.property> to <div.card>
+	END FOR
+	CREATE removeBtn
+	APPEND removeBtn to <div.card>
+END FUNCTION
+
+EVENT LISTENER addBookBtn ON CLICK:
+	DISPLAY modal (with form in middle)
+END EVENT LISTENER
+
+EVENT LISTENER closeFormBtn OR window (outside form) ON CLICK:
+	HIDE modal
+END EVENT LISTENER
+
+EVENT LISTENER submitBtn ON CLICK:
+	submitNewBook(event)
+END EVENT LISTENER
+
+FUNCTION submitNewBook(event)
+	event.preventDefault()
+
+	const title = event.target.form[1].value;
+	const author = event.target.form[2].value;
+	const pageCount = event.target.form[3].value;
+	const haveRead= event.target.form[4].checked;
+
+	const newBook = new Book(title, author, pageCount, haveRead)
+
+	IF isInLibrary(newBook)
+		DISPLAY error on form above inputs
+	ELSE 
+		addBookToLibrary(newBook)
+		HIDE modal
+		updateGrid()
+	END IF/ELSE
+END FUNCTION
+
+EVENT LISTENER removeBtn ON CLICK:
+	removeBook()
+END EVENT LISTENER
+
+FUNCTION removeBook()			//////
+	REMOVE book from myLibrary <----- 
+	updateGrid()				\\\\\\
+END FUNCTION
+
+EVENT LISTENER haveReadBtn ON CLICK:
+	toggleReadStatus()
+END EVENT LISTENER
+
+FUNCTION toggleReadStatus()
+
+*/

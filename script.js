@@ -31,11 +31,11 @@ const submitBookBtn = document.querySelector("button.submit-book");
 
 
 // -- Behind the Scenes -- //
-function Book(title, author, pageCount, haveRead) {
+function Book(title, author, pageCount, readStatus) {
     this.title = title;
     this.author = author;
     this.pageCount = pageCount;
-    this.haveRead = haveRead;
+    this.readStatus = readStatus;
 }
 
 function addBookToLibrary(...books) {
@@ -50,21 +50,21 @@ function createCard(book) {
 	const newTitle = document.createElement("div");
 	const newAuthor = document.createElement("div");
 	const newPageCount = document.createElement("div");
-	const newHaveRead = document.createElement("div");
+	const newreadStatus = document.createElement("div");
 
 	newCard.classList += "card";
 	newText.classList += "text";
 	newTitle.classList += "title";
 	newAuthor.classList += "author";
 	newPageCount.classList += "page-count";
-	newHaveRead.classList += "have-read";
+	newreadStatus.classList += "read-status";
 
 	newTitle.textContent = book.title;
 	newAuthor.textContent = book.author;
 	newPageCount.textContent = `${book.pageCount} pages`;
-	newHaveRead.textContent = book.haveRead ? "Read" : "Not Read"
+	newreadStatus.textContent = book.readStatus ? "Read" : "Not Read"
 
-	if (book.haveRead) {
+	if (book.readStatus) {
 		newCard.classList += " read-true";
 	} else {
 		newCard.classList += " read-false";
@@ -74,7 +74,7 @@ function createCard(book) {
 	newText.appendChild(newTitle);
 	newText.appendChild(newAuthor);
 	newText.appendChild(newPageCount);
-	newCard.appendChild(newHaveRead);
+	newCard.appendChild(newreadStatus);
 
 	gridContainer.appendChild(newCard);
 }
@@ -101,11 +101,11 @@ function submitNewBook(event) {
 	const submitTitle = event.target.form[1].value;
 	const submitAuthor = event.target.form[2].value;
 	const submitPageCount = event.target.form[3].value;
-	const submitHaveRead = event.target.form[4].checked;
+	const submitreadStatus = event.target.form[4].checked;
 
 	event.preventDefault();
 
-	const submitBook = new Book(submitTitle, submitAuthor, submitPageCount, submitHaveRead);
+	const submitBook = new Book(submitTitle, submitAuthor, submitPageCount, submitreadStatus);
 	addBookToLibrary(submitBook);
 	hideForm();
 	updateLibraryDisplay();
@@ -121,7 +121,12 @@ addBookToLibrary(howlCastle, hobbit, colorOfMagic, hogfather, ctYank);
 
 
 // -- On-Screen Stuff -- //
-addBookBtn.addEventListener("click", displayForm);
+// addBookBtn.addEventListener("click", displayForm);
+addBookBtn.addEventListener("click", (e) => {
+	console.log(e.target.previousElementSibling.children);
+	console.log(e.target.previousElementSibling.childNodes);
+});
+
 closeFormBtn.addEventListener("click", hideForm);
 submitBookBtn.addEventListener("click", submitNewBook);
 
@@ -143,7 +148,7 @@ FUNCTION define Book() prototype
 	title
 	author
 	pageCount
-	haveRead
+	readStatus
 END FUNCTION
 
 Create a few new Book()'s
@@ -167,9 +172,14 @@ END FUNCTION
 
 FUNCTION createCard(book)
 	CREATE <div.card>
-	FOR EACH property IN book		
-		CREATE  <p.property>
-		APPEND <p.property> to <div.card>
+	FOR EACH key IN book		
+		IF key === readStatus
+			CREATE readStatusBtn with text "Read" or "Not Read"
+			APPEND readStatusBtn to <div.card> 
+		ELSE
+			CREATE <p.key>
+			APPEND <p.key> to <div.card>
+		END IF/ELSE
 	END FOR
 	CREATE removeBtn
 	APPEND removeBtn to <div.card>
@@ -184,18 +194,18 @@ EVENT LISTENER closeFormBtn OR window (outside form) ON CLICK:
 END EVENT LISTENER
 
 EVENT LISTENER submitBtn ON CLICK:
-	submitNewBook(event)
+	submitNewBook(e)
 END EVENT LISTENER
 
-FUNCTION submitNewBook(event)
-	event.preventDefault()
+FUNCTION submitNewBook(e)
+	e.preventDefault()
 
-	const title = event.target.form[1].value;
-	const author = event.target.form[2].value;
-	const pageCount = event.target.form[3].value;
-	const haveRead= event.target.form[4].checked;
+	const title = e.target.form[1].value;
+	const author = e.target.form[2].value;
+	const pageCount = e.target.form[3].value;
+	const readStatus= e.target.form[4].checked;
 
-	const newBook = new Book(title, author, pageCount, haveRead)
+	const newBook = new Book(title, author, pageCount, readStatus)
 
 	IF isInLibrary(newBook)
 		DISPLAY error on form above inputs
@@ -207,18 +217,30 @@ FUNCTION submitNewBook(event)
 END FUNCTION
 
 EVENT LISTENER removeBtn ON CLICK:
-	removeBook()
+	removeBook(e)
 END EVENT LISTENER
 
-FUNCTION removeBook()			//////
-	REMOVE book from myLibrary <----- 
-	updateGrid()				\\\\\\
+FUNCTION removeBook(e)
+	targetBookIndex = getBookIndex(e)
+	myLibrary.splice(myLibrary[targetBookIndex], 1)
+	updateGrid()
 END FUNCTION
 
-EVENT LISTENER haveReadBtn ON CLICK:
-	toggleReadStatus()
+FUNCTION getBookIndex(e)
+	const targetTitle = e.target.parentElement.children[0].textContent;
+	const targetAuthor = e.target.parentElement.children[1].textContent;
+	const targetBook = myLibrary.find(book => book.title === targetTitle && book.author === targetAuthor);
+	return myLibrary.indexOf(targetBook)
+END FUNCTION
+
+EVENT LISTENER readStatusBtn ON CLICK:
+	toggleReadStatus(e)
 END EVENT LISTENER
 
-FUNCTION toggleReadStatus()
+FUNCTION toggleReadStatus(e)
+	targetBookIndex = getBookIndex(e)
+	myLibrary[targetBookIndex].readStatus = !myLibrary[targetBookIndex].readStatus;
+	updateGrid();
+END FUNCTION
 
 */

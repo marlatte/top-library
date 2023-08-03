@@ -151,6 +151,10 @@ FUNCTION define Book() prototype
 	readStatus
 END FUNCTION
 
+Book.prototype.toggleReadStatus = function() {
+	this.readStatus = !this.readStatus
+}
+
 Create a few new Book()'s
 
 FUNCTION addBookToLibrary(...books)
@@ -207,13 +211,17 @@ FUNCTION submitNewBook(e)
 
 	const newBook = new Book(title, author, pageCount, readStatus)
 
-	IF isInLibrary(newBook)
+	IF checkInLibrary(newBook)
 		DISPLAY error on form above inputs
 	ELSE 
 		addBookToLibrary(newBook)
 		HIDE modal
 		updateGrid()
 	END IF/ELSE
+END FUNCTION
+
+FUNCTION checkInLibrary(newBook)
+	return myLibrary.find(book => book.title === newBook.title && book.author === newBook.author);
 END FUNCTION
 
 EVENT LISTENER removeBtn ON CLICK:
@@ -238,8 +246,8 @@ EVENT LISTENER readStatusBtn ON CLICK:
 END EVENT LISTENER
 
 FUNCTION toggleReadStatus(e)
-	targetBookIndex = getBookIndex(e)
-	myLibrary[targetBookIndex].readStatus = !myLibrary[targetBookIndex].readStatus;
+	targetBookIndex = getBookIndex(e);
+	myLibrary[targetBookIndex].toggleReadStatus;
 	updateGrid();
 END FUNCTION
 

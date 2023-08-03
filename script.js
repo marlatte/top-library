@@ -174,6 +174,7 @@ FUNCTION createNewGrid()
 	RETURN newGrid
 END FUNCTION
 
+// Can I use template literals with card.innerHTML to write the nested structure? //
 FUNCTION createCard(book)
 	CREATE <div.card>
 	FOR EACH key IN book		
@@ -188,18 +189,6 @@ FUNCTION createCard(book)
 	CREATE removeBtn
 	APPEND removeBtn to <div.card>
 END FUNCTION
-
-EVENT LISTENER addBookBtn ON CLICK:
-	DISPLAY modal (with form in middle)
-END EVENT LISTENER
-
-EVENT LISTENER closeFormBtn OR window (outside form) ON CLICK:
-	HIDE modal
-END EVENT LISTENER
-
-EVENT LISTENER submitBtn ON CLICK:
-	submitNewBook(e)
-END EVENT LISTENER
 
 FUNCTION submitNewBook(e)
 	e.preventDefault()
@@ -224,10 +213,6 @@ FUNCTION checkInLibrary(newBook)
 	return myLibrary.find(book => book.title === newBook.title && book.author === newBook.author);
 END FUNCTION
 
-EVENT LISTENER removeBtn ON CLICK:
-	removeBook(e)
-END EVENT LISTENER
-
 FUNCTION removeBook(e)
 	targetBookIndex = getBookIndex(e)
 	myLibrary.splice(myLibrary[targetBookIndex], 1)
@@ -241,14 +226,32 @@ FUNCTION getBookIndex(e)
 	return myLibrary.indexOf(targetBook)
 END FUNCTION
 
-EVENT LISTENER readStatusBtn ON CLICK:
-	toggleReadStatus(e)
-END EVENT LISTENER
-
 FUNCTION toggleReadStatus(e)
 	targetBookIndex = getBookIndex(e);
 	myLibrary[targetBookIndex].toggleReadStatus;
 	updateGrid();
+END FUNCTION
+
+EVENT LISTENER document ON CLICK:
+	handleClick(e)
+END EVENT LISTENER
+
+FUNCTION handleClick(e)
+	const target = e.target;
+	IF checkModalTrigger(target)
+		modal.classlist.toggle("hidden")
+	ELSE IF target.classList.contains("submit-btn")
+		submitNewBook(e)
+	ELSE IF target.classList.contains("remove-btn")
+		removeBook(e)
+	ELSE IF target.classList.contains("read-status-btn")
+		toggleReadStatus(e)
+	END IF/ELSE
+END FUNCTION
+
+FUNCTION checkModalTrigger(target)
+	const modal = document.querySelector("#modal")
+	RETURN (target === modal) || (target.classList.contains("add-book-btn")) || (target.classList.contains("close-form-btn")) 
 END FUNCTION
 
 */

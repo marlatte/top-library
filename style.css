@@ -38,6 +38,20 @@ button {
 /* -------------------- /Utilities -------------------- */
 /* -------------------- Content -------------------- */
 
+#modal {
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+
+	display: grid;
+	place-content: center;
+
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
 header {
 	display: flex;
 	align-items: center;
@@ -46,7 +60,8 @@ header {
 	margin: 25px 0;
 }
 
-.library-container {
+main {
+	display: flex;
 	flex: auto;
 	height: 100%;
 	flex-direction: column;
@@ -55,7 +70,7 @@ header {
 	margin: 0 2rem 2rem;
 }
 
-.library-container button,
+main>button,
 .submit-book {
     padding: 0.75rem 2rem;
 	width: 80%;
@@ -87,8 +102,12 @@ header {
 .card {
 	padding: 10px 15px;
 
-	display: flex;
-	justify-content: space-between;
+	display: grid;
+	grid-template-columns: 10fr 1fr;
+	grid-template-rows: repeat(3, max-content);
+	grid-auto-flow: column;
+
+	align-items: center;
 
 	border-radius: 6px;
 	background-color: var(--bg-card);
@@ -115,8 +134,13 @@ header {
 	color: grey;
 }
 
-.card .have-read {
-	align-self: flex-end;
+.card .remove-btn {
+	grid-column: 2;
+	text-align: end;
+}
+
+.card .read-status {
+	grid-row: 3;
 }
 
 /* -------------------- /Card Grid -------------------- */
@@ -124,6 +148,7 @@ header {
 /* -------------------- Form -------------------- */
 
 form {
+	display: flex;
 	flex-direction: column;
 	align-items: stretch;
 	gap: 2rem;

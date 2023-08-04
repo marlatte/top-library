@@ -8,7 +8,8 @@
 	<title>Library Data Entry</title>
 	<link rel="stylesheet"
 		  href="style.css">
-	<script src="script.js" defer></script>
+	<script src="script.js"
+			defer></script>
 </head>
 
 <body>
@@ -22,26 +23,28 @@
 				<div class="author">Author</div>
 				<div class="page-count">123</div>
 				<div class="read-status">Read</div>
-				<button type="button" class="remove-btn">X</button>
+				<button type="button"
+						class="remove-btn">X</button>
 			</div>
 		</div>
 		<button type="button"
 				class="add-book-btn">Add Book</button>
 	</main>
-	<div id="modal" class="hidden">
+	<section id="modal"
+			 class="hidden">
 		<form>
-			<div class="form-header">
+			<section class="form-header">
 				<div class="text">
 					<h2>Add a book to the library</h2>
 					<p>
 						Required fields are followed by
-						<strong><span aria-label="required">*</span></strong>.
+						<strong><span aria-label="required">*</span></strong>
 					</p>
 				</div>
 				<button type="button"
 						class="close-form-btn">X</button>
-			</div>
-			<div class="form-row">
+			</section>
+			<section class="form-row">
 				<div class="form-item">
 					<label for="title">Title: <span aria-label="required">*</span></label>
 					<input id="title"
@@ -56,26 +59,26 @@
 						   name="author"
 						   required />
 				</div>
-			</div>
-			<div class="form-row">
+			</section>
+			<section class="form-row">
 				<div class="form-item">
-					<label for="pages">Pages: <span aria-label="required">*</span></label>
+					<label for="pages">Pages:</label>
 					<input id="pages"
 						   type="tel"
-						   name="pages"
-						   required />
+						   name="pages" />
 				</div>
 				<div class="form-item">
-					<label for="read-status">I have read it already! <span aria-label="required">*</span>
+					<label for="read-status">I have read it already!
 						<input type="checkbox"
 							   name="read-status"
-							   id="read-status">
+							   id="read-status" />
 					</label>
 				</div>
-			</div>
-			<button type="submit" class="submit-btn">Add My Book!</button>
+			</section>
+			<button type="submit"
+					class="submit-btn">Add My Book!</button>
 		</form>
-	</div>
+	</section>
 </body>
 
 </html>

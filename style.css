@@ -11,10 +11,13 @@
 /* -------------------- Utilities & Universals -------------------- */
 
 :root {
-	--bg-main: hsl(197, 80%, 70%);
-	--bg-card: hsl(197, 85%, 95%);
-	--read-true: hsl(104, 85%, 90%);
-	--read-false: hsl(0, 85%, 90%);
+	--main-bg: #0e9faf;
+	--card-text--primary: white;
+	--card-text--secondary: #E1FDFF;
+	--card-read-true: #271f7f;
+	--card-read-false: #1C5F97;
+	--button-add-bg: #244299;
+	--button-search-text: #B3BAC6;
 
 	--fonts-backup: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
@@ -24,8 +27,7 @@ body {
 	display: flex;
 	flex-direction: column;
 
-	background-color: var(--bg-main);
-	background-image: linear-gradient(var(--bg-main) 40%, hsl(197, 70%, 82%));
+	background-color: var(--main-bg);
 	font-family: var(--fonts-backup);
 	color: #0c0d2b;
 }
@@ -33,7 +35,7 @@ body {
 button {
 	cursor: pointer;
 	font-size: 1rem;
-	font-weight: bold;
+	border: none;
 }
 
 .hidden {
@@ -52,6 +54,8 @@ header {
 	justify-content: center;
 
 	margin: 25px 0;
+
+	color: white;
 }
 
 /* -------------------- /Header -------------------- */
@@ -68,20 +72,26 @@ main {
 	margin: 0 2rem 2rem;
 }
 
-main>button,
-.submit-btn {
-    padding: 0.75rem 2rem;
-	width: 80%;
-	align-self: center;
+.buttons {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 10px;
+}
 
-    font-size: 1.3rem;
-    text-transform: uppercase;
-    font-weight: bold;
-    
+.buttons>* {
+	background-color: var(--button-add-bg);
+	border-radius: 8px;
 	border: none;
-    border-radius: 40px;
-    color: white;
-    background-color: #0e0708;
+	font-size: 1.2rem;
+	padding: 1rem 2rem;
+}
+
+.add-book-btn {
+	color: var(--card-text--primary);
+}
+
+#search-btn {
+	color: var(--button-search-text);
 }
 
 /* -------------------- Card Grid -------------------- */
@@ -104,22 +114,30 @@ main>button,
 	grid-auto-flow: column;
 
 	align-items: center;
-
+	background-color: var(--card-read-true);
 	border-radius: 6px;
-	background-color: var(--bg-card);
-	border: 2px solid black;
+}
+
+.card .read-true {
+	background-color: var(--card-read-true);
+}
+
+.card .read-false {
+	background-color: var(--card-read-false);
 }
 
 .card .title {
 	font-size: 1.3rem;
+	color: var(--card-text--primary);
+	text-transform: uppercase;
 }
 
 .card .author {
-	color: rgb(64, 64, 64);
+	color: var(--card-text--secondary);
 }
 
 .card .page-count {
-	color: grey;
+	color: var(--card-text--secondary);
 }
 
 .card .remove-btn {
@@ -129,6 +147,9 @@ main>button,
 
 .card .read-status-btn {
 	grid-row: 3;
+	
+	background-color: var(--card-text--secondary);
+	border: none;
 }
 
 /* -------------------- /Card Grid -------------------- */

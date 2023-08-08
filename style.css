@@ -105,7 +105,8 @@ main {
 	gap: 20px;
 }
 
-.buttons>* {
+.add-book-btn, 
+#search-btn {
 	height: 50px;
 	display: flex;
 	justify-content: center;
@@ -116,6 +117,11 @@ main {
 	border: none;
 
 	font-size: 1.8rem;
+}
+
+.add-book-btn:hover,
+#search-btn:hover {
+	background-color: hsl(225 62% 25%);
 }
 
 .add-book-btn {
@@ -190,11 +196,28 @@ main {
 	letter-spacing: 0.6px;
 }
 
+.card .remove-btn,
+.close-form-btn {
+	align-self: start;
+	padding: 5px;
+	border-radius: 24px;
+
+	font-size: 3rem;
+	line-height: 1.5rem;
+}
+
 .card .remove-btn {
-	z-index: 1;
-	
 	margin-left: 20px;
-	text-align: end;
+}
+
+.card.card.read-true .remove-btn:hover {
+	background-color: hsl(246 61% 45%);
+	color: white;
+}
+
+.card.card.read-false .remove-btn:hover {
+	background-color: hsl(207 71% 45%);
+	color: white;
 }
 
 .read-status-text {
@@ -225,7 +248,7 @@ main {
 	display: grid;
 	place-content: center;
 
-	background-color: rgba(0, 0, 0, 0.4);
+	background-color: rgba(114, 140, 254, 0.4);
 }
 
 form {
@@ -241,7 +264,8 @@ form {
 
 	background-color: hsl(240, 67%, 98%);
 	border: 2px solid black;
-	box-shadow: 0 0 5px hsl(240, 67%, 24%);
+	border-radius: 10px;
+	box-shadow: 6px 6px 0 black;
 }
 
 .form-header {
@@ -306,21 +330,17 @@ form span[aria-label="required"] {
 	-webkit-appearance: auto;
 }
 
-form button.close-form-btn {
-	padding: 7px 10px;
-
-	color: hsl(240, 67%, 24%);
-	background-color: hsl(240, 20%, 94%);
-	border: 1px solid hsl(240, 30%, 70%);
-	border-radius: 5px;
+.close-form-btn {
+	color: var(--card-read-true);
 }
 
-form button.close-form-btn:hover {
+.close-form-btn:hover {
 	background-color: hsl(240, 40%, 90%);
 }
 
-form button.close-form-btn:active {
+.close-form-btn:active {
 	background-color: hsl(240, 20%, 100%);
+	color: var(--card-read-false);
 }
 
 /* -------------------- /Modal -------------------- */

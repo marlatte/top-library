@@ -71,12 +71,7 @@ function createCard(book) {
 			<div class="title">${book.title}</div>
 		</div>
 		<button type="button"
-				class="remove-btn">
-			<svg viewBox="0 0 14 14"
-		 		 width="20"
-		 		 fill="var(--card-text-secondary)">
-				<use href="#close-icon"></use>
-			</svg>
+				class="remove-btn">×
 		</button>
 	</div>
 	<div class="card-bottom">
@@ -144,22 +139,8 @@ function checkModalTrigger(target) {
 		(target.classList.contains("close-form-btn"));
 }
 
-function setTarget(e) {
-	switch (e.target.tagName) {
-		case "use":
-			return e.target.parentElement.parentElement;
-			break;
-		case "svg":
-			return e.target.parentElement;
-			break;
-		default:
-			return e.target;
-			break;
-	}
-}
-
 function handleClick(e) {
-	const target = setTarget(e);
+	const target = e.target;
 	if (checkModalTrigger(target)) {
 		modal.classList.toggle("hidden");
 	} else if (target.classList.contains("remove-btn")) {

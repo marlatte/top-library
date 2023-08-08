@@ -65,11 +65,18 @@ function createCard(book) {
 	const card = document.createElement("div");
 	card.classList += "card";
 	card.innerHTML = `
-	<div class="title">${book.title}</div>
-	<div class="author">${book.author}</div>
-	<div class="page-count">${book.pageCount}</div>
-	<button class="read-status-btn">${book.readStatus ? "Read" : "Not Read"}</button>
-	<button type="button" class="remove-btn">X</button>
+	<div class="card-top">
+		<div class="highlights">
+			<div class="author">${book.author}</div>
+			<div class="title">${book.title}</div>
+		</div>
+		<button type="button" class="remove-btn">X</button>
+	</div>
+	<div class="card-bottom">
+		<div class="page-count">${book.pageCount} Pages</div>
+		<div class="read-status-text">Read?</div>
+		<button class="read-status-btn">${book.readStatus ? "Yes" : "No"}</button>
+	</div>
 	` // End innerHTML
 	return card
 }
@@ -112,8 +119,8 @@ function removeBook(e) {
 }
 
 function getBookIndex(e) {
-	const targetTitle = e.target.parentElement.children[0].textContent;
-	const targetAuthor = e.target.parentElement.children[1].textContent;
+	const targetAuthor = e.target.parentElement.parentElement.firstElementChild.firstElementChild.children[0].textContent;
+	const targetTitle = e.target.parentElement.parentElement.firstElementChild.firstElementChild.children[1].textContent;
 	const targetBook = myLibrary.find(book => book.title === targetTitle && book.author === targetAuthor);
 	return myLibrary.indexOf(targetBook);
 }

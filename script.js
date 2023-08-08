@@ -7,7 +7,7 @@
 let myLibrary = [];
 
 const howlCastle = new Book("Howl's Moving Castle", "Diana Wynne Jones", 429, true);
-const hobbit = new Book("The Hobbit","J. R. R. Tolkien", 295, true);
+const hobbit = new Book("The Hobbit", "J. R. R. Tolkien", 295, true);
 const colorOfMagic = new Book("The Color of Magic", "Terry Pratchett", 288, true);
 const hogfather = new Book("Hogfather", "Terry Pratchett", 384, false);
 const ctYank = new Book("A Connecticut Yankee in King Arthur's Court", "Mark Twain", 469, true);
@@ -30,13 +30,13 @@ const duplicateError = document.querySelector(".duplicate-error");
 
 // -- Behind the Scenes -- //
 function Book(title, author, pageCount, readStatus) {
-    this.title = title;
-    this.author = author;
-    this.pageCount = pageCount;
-    this.readStatus = readStatus;
+	this.title = title;
+	this.author = author;
+	this.pageCount = pageCount;
+	this.readStatus = readStatus;
 }
 
-Book.prototype.toggleReadStatus = function() {
+Book.prototype.toggleReadStatus = function () {
 	this.readStatus = !this.readStatus
 };
 
@@ -53,7 +53,7 @@ function updateGrid() {
 }
 
 function createNewGrid() {
-	newGrid = [] 
+	newGrid = []
 	for (const book of myLibrary) {
 		const newCard = createCard(book);
 		newGrid.push(newCard);
@@ -63,14 +63,21 @@ function createNewGrid() {
 
 function createCard(book) {
 	const card = document.createElement("div");
-	card.classList += "card";
+	card.classList = `card read-${book.readStatus}`;
 	card.innerHTML = `
 	<div class="card-top">
 		<div class="highlights">
 			<div class="author">${book.author}</div>
 			<div class="title">${book.title}</div>
 		</div>
-		<button type="button" class="remove-btn">X</button>
+		<button type="button"
+				class="remove-btn">
+			<svg viewBox="0 0 14 14"
+		 		 width="20"
+		 		 fill="var(--card-text-secondary)">
+				<use href="#close-icon"></use>
+			</svg>
+		</button>
 	</div>
 	<div class="card-bottom">
 		<div class="page-count">${book.pageCount} Pages</div>
@@ -83,9 +90,9 @@ function createCard(book) {
 
 function submitNewBook(e) {
 	e.preventDefault();
-	
+
 	const newBook = new Book(titleInput.value, authorInput.value, pageCountInput.value, readStatusInput.checked);
-	
+
 	if (checkDuplicate(newBook)) {
 		duplicateError.classList = "duplicate-error";
 		titleInput.addEventListener("keydown", removeDuplicateError);
@@ -118,33 +125,47 @@ function removeBook(e) {
 	updateGrid();
 }
 
-function getBookIndex(e) {
-	const targetAuthor = e.target.parentElement.parentElement.firstElementChild.firstElementChild.children[0].textContent;
-	const targetTitle = e.target.parentElement.parentElement.firstElementChild.firstElementChild.children[1].textContent;
+function getBookIndex(target) {
+	const targetAuthor = target.parentElement.parentElement.firstElementChild.firstElementChild.children[0].textContent;
+	const targetTitle = target.parentElement.parentElement.firstElementChild.firstElementChild.children[1].textContent;
 	const targetBook = myLibrary.find(book => book.title === targetTitle && book.author === targetAuthor);
 	return myLibrary.indexOf(targetBook);
 }
 
-function triggerToggleReadStatus(e) {
-	const targetBookIndex = getBookIndex(e);
+function triggerToggleReadStatus(target) {
+	const targetBookIndex = getBookIndex(target);
 	myLibrary[targetBookIndex].toggleReadStatus();
 	updateGrid();
 }
 
 function checkModalTrigger(target) {
-	return 	(target === modal) || 
-	(target.classList.contains("add-book-btn")) || 
-	(target.classList.contains("close-form-btn"));
+	return (target === modal) ||
+		(target.classList.contains("add-book-btn")) ||
+		(target.classList.contains("close-form-btn"));
+}
+
+function setTarget(e) {
+	switch (e.target.tagName) {
+		case "use":
+			return e.target.parentElement.parentElement;
+			break;
+		case "svg":
+			return e.target.parentElement;
+			break;
+		default:
+			return e.target;
+			break;
+	}
 }
 
 function handleClick(e) {
-	const target = e.target;
+	const target = setTarget(e);
 	if (checkModalTrigger(target)) {
 		modal.classList.toggle("hidden");
 	} else if (target.classList.contains("remove-btn")) {
-		removeBook(e);
+		removeBook(target);
 	} else if (target.classList.contains("read-status-btn")) {
-		triggerToggleReadStatus(e);
+		triggerToggleReadStatus(target);
 	}
 }
 

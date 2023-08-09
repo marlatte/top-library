@@ -30,8 +30,10 @@
 
 body {
 	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
 
-	background-color: var(--main-bg);
+	background-color: var(--header-bg);
 	font-family: var(--font-body), var(--fonts-backup);
 	color: #0c0d2b;
 }
@@ -71,6 +73,7 @@ button {
 /* -------------------- Header -------------------- */
 
 header {
+	position: relative;
 	background-color: var(--header-bg);
 	box-shadow: 0 0 5px black;
 }
@@ -145,12 +148,11 @@ h1 {
 
 /* -------------------- Main -------------------- */
 
-main {
-	display: flex;
-	flex: auto;
-	height: 100%;
-	flex-direction: column;
+main.container {
+	flex: 1;
 	gap: 20px;
+
+	background-color: var(--main-bg);
 }
 
 /* -------------------- Card Grid -------------------- */

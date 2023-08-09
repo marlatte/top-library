@@ -32,6 +32,7 @@ body {
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
+	overflow-x: hidden;
 
 	background-color: var(--header-bg);
 	font-family: var(--font-body), var(--fonts-backup);
@@ -162,7 +163,7 @@ main.container {
 
 	display: grid;
 	align-items: start;
-	grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 	gap: var(--grid-spacing);
 }
 
@@ -224,7 +225,7 @@ main.container {
 }
 
 .card .remove-btn {
-	margin-left: 20px;
+	margin: 0px -6px 0 5px;
 }
 
 .card.card.read-true .remove-btn:hover {
@@ -233,7 +234,7 @@ main.container {
 }
 
 .card.card.read-false .remove-btn:hover {
-	background-color: hsl(207 71% 45%);
+	background-color: hsl(227 63% 33%);
 	color: white;
 }
 

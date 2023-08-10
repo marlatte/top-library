@@ -5,4 +5,4 @@ Create a library that takes user input for books, stores them in objects, and di
 Requirements can be found [here](https://www.theodinproject.com/lessons/node-path-javascript-library).
 
 
-[Live Demo](https://marlatte.github.io/top-library/)
+👉 [Live Demo](https://marlatte.github.io/top-library/) 👈

@@ -95,6 +95,7 @@ function submitNewBook(e) {
 	} else {
 		addBookToLibrary(newBook);
 		modal.classList.toggle("hidden");
+		form.reset();
 		updateGrid();
 	}
 }

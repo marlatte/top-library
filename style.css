@@ -370,7 +370,7 @@ form span[aria-label="required"] {
 	-webkit-appearance: none;
 	padding: 6px 10px;
 
-	font-size: 0.9rem;
+	font-size: max(16px, 0.9rem);
 	background-color: var(--input-bg);
 	border: 1px solid lightgrey;
 	border-radius: 5px;

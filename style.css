@@ -80,13 +80,15 @@ header {
 }
 
 header .container {
-	padding-top: 12px;
-	padding-bottom: 16px;
 	gap: 10px;
 }
 
-h1 {
+header a {
+	text-decoration: none;
 	align-self: center;
+}
+
+h1 {
 	max-width: 200px;
 
 	font-family: var(--font-header), var(--fonts-backup);
@@ -107,13 +109,13 @@ h1 {
 }
 
 .buttons {
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	gap: 25px;
+	display: flex;
+	gap: 18px;
 }
 
-.add-book-btn,
-#search-btn {
+header button {
+	flex: 1;
+
 	height: 50px;
 	display: flex;
 	justify-content: center;
@@ -426,3 +428,29 @@ label[for="read-status"] {
 
 /* -------------------- /Modal -------------------- */
 /* -------------------- /Content -------------------- */
+
+
+/* -------------------- Media -------------------- */
+
+@media (min-width: 700px) {
+	header {
+		display: flex;
+		justify-content: center;
+	}
+
+	.container {
+		padding: 18px 4%;
+	}
+
+	header .container {
+		flex: auto;
+
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.buttons {
+		width: 48%;
+	}
+}

@@ -16,10 +16,10 @@
 	--main-bg: #167FA3;
 	--text-primary: white;
 	--text-secondary: #E1FDFF;
+	--text-tertiary: #7383ab;
 	--read-true: #271f7f;
 	--read-false: #151F5F;
 	--header-bg: #213F8B;
-	--search-text: #B3BAC6;
 	--form-bg: #F2F2F2;
 	--input-bg: #F8F8F8;
 
@@ -127,7 +127,7 @@ header button {
 }
 
 #search-btn {
-	color: var(--search-text);
+	color: var(--text-tertiary);
 	gap: 2%;
 }
 
@@ -444,7 +444,7 @@ label[for="read-status"] {
 
 /* -------------------- Footer -------------------- */
 footer {
-	margin: 12px;
+	padding: 12px;
 
 	display: flex;
 	flex-direction: column;
@@ -452,6 +452,7 @@ footer {
 	align-items: center;
 
 	color: var(--text-secondary);
+	background-color: var(--read-false);
 	text-align: center;
 	font-size: 1.2rem;
 }

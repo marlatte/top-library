@@ -86,7 +86,8 @@ function createCard(book) {
 function submitNewBook(e) {
 	e.preventDefault();
 
-	const newBook = new Book(titleInput.value, authorInput.value, pageCountInput.value, readStatusInput.checked);
+	const sanitizedDetails = [titleInput.value, authorInput.value].map((input => input.replace(/[;:<>{}[\]\\\/]/g, "")));
+	const newBook = new Book(sanitizedDetails[0], sanitizedDetails[1], pageCountInput.value, readStatusInput.checked);
 
 	if (checkDuplicate(newBook)) {
 		duplicateError.classList = "duplicate-error";

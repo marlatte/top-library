@@ -92,6 +92,7 @@
 					<input id="title"
 						   type="text"
 						   name="title"
+						   pattern="[^\;\:\<\>\{\}\[\]\\\/]"
 						   placeholder="The Golden Compass"
 						   required />
 				</div>
@@ -101,6 +102,7 @@
 					<input id="author"
 						   type="text"
 						   name="author"
+						   pattern="[^\;\:\<\>\{\}\[\]\\\/]"
 						   placeholder="Phillip Pullman"
 						   required />
 				</div>
@@ -108,6 +110,7 @@
 					<label for="page-count">Page Count</label>
 					<input id="page-count"
 						   type="tel"
+						   pattern="[0-9]*"
 						   name="page-count"
 						   value="0" />
 				</div>

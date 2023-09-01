@@ -6,12 +6,6 @@
 // -- Behind the Scenes -- //
 let myLibrary = [];
 
-const howlCastle = new Book("Howl's Moving Castle", "Diana Wynne Jones", 429, true);
-const hobbit = new Book("The Hobbit", "J. R. R. Tolkien", 295, true);
-const colorOfMagic = new Book("The Color of Magic", "Terry Pratchett", 288, true);
-const hogfather = new Book("Hogfather", "Terry Pratchett", 384, false);
-const ctYank = new Book("A Connecticut Yankee in King Arthur's Court", "Mark Twain", 469, true);
-
 
 // -- On-Screen Stuff -- //
 const titleInput = document.getElementById("title");
@@ -29,16 +23,19 @@ const duplicateError = document.querySelector(".duplicate-error");
 
 
 // -- Behind the Scenes -- //
-function Book(title, author, pageCount, readStatus) {
-	this.title = title;
-	this.author = author;
-	this.pageCount = pageCount;
-	this.readStatus = readStatus;
+class Book {
+	constructor(title, author, pageCount, readStatus) {
+		this.title = title;
+		this.author = author;
+		this.pageCount = pageCount;
+		this.readStatus = readStatus;
+	}
+
+	toggleReadStatus() {
+		this.readStatus = !this.readStatus
+	};
 }
 
-Book.prototype.toggleReadStatus = function () {
-	this.readStatus = !this.readStatus
-};
 
 function addBookToLibrary(...books) {
 	myLibrary.push(...books);
@@ -86,8 +83,15 @@ function createCard(book) {
 function submitNewBook(e) {
 	e.preventDefault();
 
-	const sanitizedDetails = [titleInput.value, authorInput.value].map((input => input.replace(/[;:<>{}[\]\\\/]/g, "")));
-	const newBook = new Book(sanitizedDetails[0], sanitizedDetails[1], pageCountInput.value, readStatusInput.checked);
+	const sanitizedDetails = [titleInput.value, authorInput.value].map(input => {
+		input.replace(/[;:<>{}[\]\\\/]/g, "")
+	});
+	const newBook = new Book(
+		sanitizedDetails[0],
+		sanitizedDetails[1],
+		pageCountInput.value,
+		readStatusInput.checked
+	);
 
 	if (checkDuplicate(newBook)) {
 		duplicateError.classList = "duplicate-error";
@@ -159,6 +163,11 @@ function handleClick(e) {
 
 
 // -- Behind the Scenes -- //
+const howlCastle = new Book("Howl's Moving Castle", "Diana Wynne Jones", 429, true);
+const hobbit = new Book("The Hobbit", "J. R. R. Tolkien", 295, true);
+const colorOfMagic = new Book("The Color of Magic", "Terry Pratchett", 288, true);
+const hogfather = new Book("Hogfather", "Terry Pratchett", 384, false);
+const ctYank = new Book("A Connecticut Yankee in King Arthur's Court", "Mark Twain", 469, true);
 addBookToLibrary(howlCastle, hobbit, colorOfMagic, hogfather, ctYank);
 
 

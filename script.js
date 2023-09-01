@@ -3,9 +3,9 @@
 // -------------------------------------------------------------------------------- //
 
 function Library() {
-	let myBooks = [];
-	const getBooks = () => myBooks;
-	
+	let _myBooks = [];
+	const getBooks = () => _myBooks;
+
 	class Book {
 		constructor(title, author, pageCount, readStatus) {
 			this.title = title;
@@ -16,17 +16,26 @@ function Library() {
 
 		toggleReadStatus() {
 			this.readStatus = !this.readStatus
-		};
+		}
 	}
 
 
 	function addBookToLibrary(cleanDetails) {
 		const newBook = new Book(cleanDetails[0], cleanDetails[1], cleanDetails[2], cleanDetails[3]);
-		myBooks.push(newBook);
+		_myBooks.push(newBook);
+	}
+
+	function removeBook(targetBookIndex) {
+		_myBooks.splice(targetBookIndex, 1);
+
+	}
+
+	function toggleReadStatus(index) {
+		_myBooks[index].toggleReadStatus();
 	}
 
 	function checkDuplicate(newTitle, newAuthor) {
-		return myBooks.find(book => {
+		return _myBooks.find(book => {
 			let details = [book.title, newTitle, book.author, newAuthor].map(detail => detail.toLowerCase().replace(/[^\w\d]/gi, ""));
 			return new Set(details).size < 3;
 		});
@@ -35,8 +44,8 @@ function Library() {
 	function getBookIndex(target) {
 		const targetAuthor = target.parentElement.parentElement.firstElementChild.firstElementChild.children[0].textContent;
 		const targetTitle = target.parentElement.parentElement.firstElementChild.firstElementChild.children[1].textContent;
-		const targetBook = myBooks.find(book => book.title === targetTitle && book.author === targetAuthor);
-		return myBooks.indexOf(targetBook);
+		const targetBook = _myBooks.find(book => book.title === targetTitle && book.author === targetAuthor);
+		return _myBooks.indexOf(targetBook);
 	}
 
 	const startingBooks = [
@@ -49,10 +58,10 @@ function Library() {
 
 	startingBooks.forEach(book => addBookToLibrary(book));
 
-	return { getBooks, getBookIndex, checkDuplicate, addBookToLibrary }
+	return { getBooks, getBookIndex, checkDuplicate, addBookToLibrary, removeBook, toggleReadStatus }
 }
 
-const screenController = (() => {
+const ScreenController = (() => {
 	const modal = document.querySelector("#modal");
 	const form = document.querySelector("form");
 	const duplicateError = document.querySelector(".duplicate-error");
@@ -63,43 +72,36 @@ const screenController = (() => {
 	const readStatusInput = document.getElementById("read-status");
 
 	const library = Library();
-	const myBooks = library.getBooks();
 
 	function updateGrid() {
 		const currentGrid = document.querySelector(".grid-container");
-		const newGrid = createNewGrid();
-		currentGrid.replaceChildren(...newGrid);
-	}
-
-	function createNewGrid() {
-		newGrid = []
-		for (const book of myBooks) {
-			const newCard = createCard(book);
-			newGrid.push(newCard);
+		const newGrid = []
+		for (const book of library.getBooks()) {
+			const newCard = (book) => {
+				const card = document.createElement("div");
+				card.classList = `card read-${book.readStatus}`;
+				card.innerHTML = `
+				<div class="card-top">
+					<div class="highlights">
+						<div class="author">${book.author}</div>
+						<div class="title">${book.title}</div>
+					</div>
+					<button type="button"
+							class="remove-btn book-changer">×
+					</button>
+				</div>
+				<div class="card-bottom">
+					<div class="page-count">${book.pageCount} Pages</div>
+					<div class="read-status-text">Read?</div>
+					<button type="button" 
+							class="read-status-btn book-changer">${book.readStatus ? "Yes" : "No"}</button>
+				</div>
+				` // End innerHTML
+				return card
+			}
+			newGrid.push(newCard(book));
 		}
-		return newGrid
-	}
-
-	function createCard(book) {
-		const card = document.createElement("div");
-		card.classList = `card read-${book.readStatus}`;
-		card.innerHTML = `
-		<div class="card-top">
-			<div class="highlights">
-				<div class="author">${book.author}</div>
-				<div class="title">${book.title}</div>
-			</div>
-			<button type="button"
-					class="remove-btn">×
-			</button>
-		</div>
-		<div class="card-bottom">
-			<div class="page-count">${book.pageCount} Pages</div>
-			<div class="read-status-text">Read?</div>
-			<button class="read-status-btn">${book.readStatus ? "Yes" : "No"}</button>
-		</div>
-		` // End innerHTML
-		return card
+		currentGrid.replaceChildren(...newGrid);
 	}
 
 	function handleFormSubmit(e) {
@@ -130,32 +132,26 @@ const screenController = (() => {
 
 	function checkModalTrigger(target) {
 		return (target === modal) ||
-			(target.classList.contains("add-book-btn")) ||
-			(target.classList.contains("close-form-btn"));
-	}
-
-	function removeBook(target) {
-		const targetBookIndex = Library().getBookIndex(target);
-		myBooks.splice(targetBookIndex, 1);
-		updateGrid();
+			(target.classList.contains("open-modal-btn")) ||
+			(target.classList.contains("close-modal-btn"));
 	}
 
 	function handleClick(e) {
 		const target = e.target;
-		const targetBookIndex = getBookIndex(target);
 		if (checkModalTrigger(target)) {
 			modal.classList.toggle("hidden");
-		} else if (target.classList.contains("remove-btn")) {
-			removeBook(target);
-		} else if (target.classList.contains("read-status-btn")) {
-			myBooks[targetBookIndex].toggleReadStatus();
-			updateGrid();
+			setTimeout(() => {
+				titleInput.focus();
+			}, 900);
+		} else if (target.classList.contains("book-changer")) {
+				const targetBookIndex = library.getBookIndex(target);
+				target.classList.contains("remove-btn") ? library.removeBook(targetBookIndex) : library.toggleReadStatus(targetBookIndex);
+				updateGrid();
 		}
 	}
 
+	// Init
 	updateGrid();
-
 	form.addEventListener("submit", handleFormSubmit)
 	document.addEventListener("click", handleClick)
-
 })();

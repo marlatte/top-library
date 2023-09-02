@@ -1,7 +1,3 @@
-// -------------------------------------------------------------------------------- //
-// ----------------------------     Library Module     ---------------------------- //
-// -------------------------------------------------------------------------------- //
-
 function Library() {
 	let _myBooks = [];
 	const getBooks = () => _myBooks;
@@ -48,7 +44,7 @@ function Library() {
 		return _myBooks.indexOf(targetBook);
 	}
 
-	const startingBooks = [
+	const _startingBooks = [
 		["Howl's Moving Castle", "Diana Wynne Jones", 429, true],
 		["The Hobbit", "J. R. R. Tolkien", 295, true],
 		["The Color of Magic", "Terry Pratchett", 288, true],
@@ -56,7 +52,7 @@ function Library() {
 		["A Connecticut Yankee in King Arthur's Court", "Mark Twain", 469, true]
 	];
 
-	startingBooks.forEach(book => addBookToLibrary(book));
+	_startingBooks.forEach(book => addBookToLibrary(book));
 
 	return { getBooks, getBookIndex, checkDuplicate, addBookToLibrary, removeBook, toggleReadStatus }
 }
@@ -120,20 +116,14 @@ const ScreenController = (() => {
 			form.reset();
 			updateGrid();
 		}
-	}
 
-	function hideDuplicateError(e) {
-		if (e.key.length < 2 || e.key === "Backspace") {
-			duplicateError.classList = "duplicate-error hidden";
-			titleInput.removeEventListener("keydown", hideDuplicateError);
-			authorInput.removeEventListener("keydown", hideDuplicateError);
+		function hideDuplicateError(e) {
+			if (e.key.length < 2 || e.key === "Backspace") {
+				duplicateError.classList = "duplicate-error hidden";
+				titleInput.removeEventListener("keydown", hideDuplicateError);
+				authorInput.removeEventListener("keydown", hideDuplicateError);
+			}
 		}
-	}
-
-	function checkModalTrigger(target) {
-		return (target === modal) ||
-			(target.classList.contains("open-modal-btn")) ||
-			(target.classList.contains("close-modal-btn"));
 	}
 
 	function handleClick(e) {
@@ -144,10 +134,16 @@ const ScreenController = (() => {
 				titleInput.focus();
 			}, 900);
 		} else if (target.classList.contains("book-changer")) {
-				const targetBookIndex = library.getBookIndex(target);
-				target.classList.contains("remove-btn") ? library.removeBook(targetBookIndex) : library.toggleReadStatus(targetBookIndex);
-				updateGrid();
+			const targetBookIndex = library.getBookIndex(target);
+			target.classList.contains("remove-btn") ? library.removeBook(targetBookIndex) : library.toggleReadStatus(targetBookIndex);
+			updateGrid();
 		}
+	}
+
+	function checkModalTrigger(target) {
+		return (target === modal) ||
+			(target.classList.contains("open-modal-btn")) ||
+			(target.classList.contains("close-modal-btn"));
 	}
 
 	// Init

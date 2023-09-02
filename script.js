@@ -110,7 +110,7 @@ const ScreenController = (() => {
 		const cleanDetails = [titleInput.value, authorInput.value].map(input => input.replace(/[;:<>{}[\]\\\/]/g, ""));
 		cleanDetails.push(pageCountInput.value, readStatusInput.checked);
 
-		if (Library().checkDuplicate(cleanDetails[0], cleanDetails[1])) {
+		if (library.checkDuplicate(cleanDetails[0], cleanDetails[1])) {
 			duplicateError.classList = "duplicate-error";
 			titleInput.addEventListener("keydown", hideDuplicateError);
 			authorInput.addEventListener("keydown", hideDuplicateError);
@@ -154,4 +154,9 @@ const ScreenController = (() => {
 	updateGrid();
 	form.addEventListener("submit", handleFormSubmit)
 	document.addEventListener("click", handleClick)
+	document.addEventListener("keydown", (e) => {
+		if (!modal.classList.contains("hidden") && e.key === "Escape") {
+			modal.classList.add("hidden");
+		}
+	})
 })();
